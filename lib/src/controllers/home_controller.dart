@@ -4,20 +4,20 @@ import 'package:money_converter/src/models/currency.dart';
 class HomeController {
   late List<CurrencyModel> currencies;
 
-  TextEditingController toTextValue = TextEditingController();
-  TextEditingController fromTextValue = TextEditingController();
+  final TextEditingController toTextValue;
+  final TextEditingController fromTextValue;
 
   late CurrencyModel toCurrency;
   late CurrencyModel fromCurrency;
 
-  HomeController() {
+  HomeController(this.toTextValue, this.fromTextValue) {
     currencies = CurrencyModel.getCurrencies();
     toCurrency = currencies[0];
     fromCurrency = currencies[1];
   }
 
   void convert() {
-    double toValue = double.tryParse(toTextValue.text) ?? 1.0;
+    double toValue = double.tryParse(toTextValue.text.replaceAll(',', '.')) ?? 1.0;
     double convertedValue = 0;
 
     if (fromCurrency.name == 'Real') {
